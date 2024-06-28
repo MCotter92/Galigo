@@ -1,7 +1,9 @@
 import os
 
 import pygame
-from entities import Player
+from player import Player
+
+print("galigo")
 
 WIDTH, HEIGHT = (500, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -13,11 +15,19 @@ BULLETS_VELOCITY = 10
 RED = (255, 0, 0)
 
 SPACESHIP = Player(
-    "Player1", "spaceship_red.png", SPACESHIP_WIDTH, SPACESHIP_HEIGHT, 100
+    "Player1",
+    "spaceship_red.png",
+    SPACESHIP_WIDTH,
+    SPACESHIP_HEIGHT,
+    100,
 )
 
 ENEMY = Player(
-    "Enemy1", "spaceship_yellow.png", SPACESHIP_WIDTH - 3, SPACESHIP_HEIGHT - 3, 50
+    "Enemy1",
+    "spaceship_yellow.png",
+    SPACESHIP_WIDTH - 3,
+    SPACESHIP_HEIGHT - 3,
+    50,
 )
 
 SPACE_IMAGE = pygame.image.load(os.path.join("Assets", "space.png"))
