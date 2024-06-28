@@ -1,6 +1,7 @@
-import pygame
 import os
 
+import pygame
+from entities import Player
 
 WIDTH, HEIGHT = (500, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -11,14 +12,12 @@ VELO = 7
 BULLETS_VELOCITY = 10
 RED = (255, 0, 0)
 
-SPACESHIP_IMAGE = pygame.image.load(os.path.join("Assets", "spaceship_red.png"))
-SPACESHIP = pygame.transform.rotate(
-    pygame.transform.scale(SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 180
+SPACESHIP = Player(
+    "Player1", "spaceship_red.png", SPACESHIP_WIDTH, SPACESHIP_HEIGHT, 100
 )
 
-ENEMY_IMAGE = pygame.image.load(os.path.join("Assets", "spaceship_yellow.png"))
-ENEMY = pygame.transform.rotate(
-    pygame.transform.scale(ENEMY_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 0
+ENEMY = Player(
+    "Enemy1", "spaceship_yellow.png", SPACESHIP_WIDTH - 3, SPACESHIP_HEIGHT - 3, 50
 )
 
 SPACE_IMAGE = pygame.image.load(os.path.join("Assets", "space.png"))
