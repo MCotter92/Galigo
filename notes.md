@@ -1,0 +1,27 @@
+# June 28
+
+- Entity Class (base class)
+  - image
+  - name
+  - no defaults
+- Player
+  - HP
+  - image
+  - name
+
+- Enemy Class (inherits from Entity)
+  - image
+  - name
+  - difficulty level
+  - HP
+  - set defaults
+
+- Enemy Groups
+  - list of enemies
+  - list of positions
+
+- Levels ( from Entity )
+  - image (background)
+  - name (level 1 etc)
+  - enemies
+  - player

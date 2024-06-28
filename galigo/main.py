@@ -1,6 +1,7 @@
 import pygame
 import os
 
+
 WIDTH, HEIGHT = (500, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -25,7 +26,7 @@ SPACE = pygame.transform.rotate(
     pygame.transform.scale(SPACE_IMAGE, (WIDTH, HEIGHT)), 180
 )
 
-ENEMY_HIT = pygame.USEREVENT
+# ENEMY_HIT = pygame.USEREVENT
 
 
 def draw_window(spaceship, player_bullets, enemy):
@@ -70,7 +71,7 @@ def handle_bullets(player_bullets):  # add enemy as func input here when ready
 
 def main():
     spaceship = pygame.Rect(225, 600, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
-    enemy = pygame.Rect(225, 600, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+    enemy = pygame.Rect(225, 200, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
     player_bullets = []
     clock = pygame.time.Clock()
     run = True
