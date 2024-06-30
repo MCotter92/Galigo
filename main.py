@@ -1,9 +1,11 @@
 import os
 
 import pygame
-
+from asset_classes.enemy import Enemy
+from asset_classes.enemies import Enemies
 from asset_classes.player import Player
 from utils.utils import load_png
+
 
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -21,16 +23,7 @@ SPACESHIP = Player(
     SPACESHIP_HEIGHT,
     angle=180,
     hp=100,
-)
-
-
-ENEMY = Player(
-    "Enemy1",
-    "spaceship_yellow.png",
-    SPACESHIP_WIDTH - 3,
-    SPACESHIP_HEIGHT - 3,
-    angle=0,
-    hp=50,
+    coord=(225, 600),
 )
 
 SPACE = load_png("space.png", WIDTH, HEIGHT, 0)
@@ -38,10 +31,34 @@ SPACE = load_png("space.png", WIDTH, HEIGHT, 0)
 # ENEMY_HIT = pygame.USEREVENT
 
 
-def draw_window(spaceship, player_bullets, enemy):
+def create_enemies():
+    i = 0
+    x = 225
+    y = 200
+    enemies = Enemies([], [], [])
+    while i < 5:
+        ENEMY = Enemy(
+            "Enemy1",
+            "spaceship_yellow.png",
+            SPACESHIP_WIDTH - 3,
+            SPACESHIP_HEIGHT - 3,
+            angle=0,
+            hp=50,
+            coord=(x, y),
+        )
+        enemies.add_enemies(ENEMY)
+        i += 1
+        x += 100
+    return enemies
+
+
+def draw_window(player_bullets):
     WINDOW.blit(SPACE[0], (0, 0))
-    WINDOW.blit(SPACESHIP.img, (spaceship.x, spaceship.y))
-    WINDOW.blit(ENEMY.img, (enemy.x, enemy.y))
+    WINDOW.blit(SPACESHIP.img, SPACESHIP.coord)
+
+    enemies = create_enemies()
+    for enemy in enemies.enemies:
+        WINDOW.blit(enemy.img, enemy.coord)
 
     for bullet in player_bullets:
         pygame.draw.rect(WINDOW, RED, bullet)
@@ -105,9 +122,8 @@ def main():
 
         spaceship_movement(keys_pressed, spaceship)
         handle_bullets(player_bullets)
-        draw_window(spaceship, player_bullets, enemy)
+        draw_window(player_bullets)
 
 
-main()
 if __name__ == "__main__":
     main()
