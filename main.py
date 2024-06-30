@@ -1,11 +1,11 @@
 import os
 
 import pygame
-from player import Player
 
-print("galigo")
+from asset_classes.player import Player
+from utils.utils import load_png
 
-WIDTH, HEIGHT = (500, 700)
+WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = (55, 40)
@@ -19,29 +19,29 @@ SPACESHIP = Player(
     "spaceship_red.png",
     SPACESHIP_WIDTH,
     SPACESHIP_HEIGHT,
-    100,
+    angle=180,
+    hp=100,
 )
+
 
 ENEMY = Player(
     "Enemy1",
     "spaceship_yellow.png",
     SPACESHIP_WIDTH - 3,
     SPACESHIP_HEIGHT - 3,
-    50,
+    angle=0,
+    hp=50,
 )
 
-SPACE_IMAGE = pygame.image.load(os.path.join("Assets", "space.png"))
-SPACE = pygame.transform.rotate(
-    pygame.transform.scale(SPACE_IMAGE, (WIDTH, HEIGHT)), 180
-)
+SPACE = load_png("space.png", WIDTH, HEIGHT, 0)
 
 # ENEMY_HIT = pygame.USEREVENT
 
 
 def draw_window(spaceship, player_bullets, enemy):
-    WINDOW.blit(SPACE, (0, 0))
-    WINDOW.blit(SPACESHIP, (spaceship.x, spaceship.y))
-    WINDOW.blit(ENEMY, (enemy.x, enemy.y))
+    WINDOW.blit(SPACE[0], (0, 0))
+    WINDOW.blit(SPACESHIP.img, (spaceship.x, spaceship.y))
+    WINDOW.blit(ENEMY.img, (enemy.x, enemy.y))
 
     for bullet in player_bullets:
         pygame.draw.rect(WINDOW, RED, bullet)
@@ -59,7 +59,10 @@ def spaceship_movement(keys_pressed, spaceship):
         spaceship.x += VELO
 
     if keys_pressed[pygame.K_w] and spaceship.y - VELO > 0:  # move UP
-        spaceship.y -= VELO
+        if spaceship.y <= 500:
+            spaceship.y = 500
+        else:
+            spaceship.y -= VELO
     if (
         keys_pressed[pygame.K_s] and spaceship.y + VELO + spaceship.height < HEIGHT
     ):  # move down
