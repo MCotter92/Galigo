@@ -7,3 +7,6 @@ class Level(Entity):
         super().__init__()
         self.powerUP = powerUP
         self.numUP = enemiesNumUp
+
+    def increaseLevel():
+        "do stuff"
