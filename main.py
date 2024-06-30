@@ -7,7 +7,7 @@ from asset_classes.player import Player
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
-SPACESHIP_WIDTH, SPACESHIP_HEIGHT = (50, 50)
+SPACESHIP_WIDTH, SPACESHIP_HEIGHT = (55, 40)
 FPS = 60
 VELO = 7
 BULLETS_VELOCITY = 10
