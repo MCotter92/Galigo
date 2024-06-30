@@ -3,6 +3,7 @@ import os
 import pygame
 
 from asset_classes.player import Player
+from utils.utils import load_png
 
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -32,14 +33,13 @@ ENEMY = Player(
     hp=50,
 )
 
-SPACE_IMAGE = pygame.image.load(os.path.join("Assets", "space.png"))
-SPACE = pygame.transform.rotate(pygame.transform.scale(SPACE_IMAGE, (WIDTH, HEIGHT)), 0)
+SPACE = load_png("space.png", WIDTH, HEIGHT, 0)
 
 # ENEMY_HIT = pygame.USEREVENT
 
 
 def draw_window(spaceship, player_bullets, enemy):
-    WINDOW.blit(SPACE, (0, 0))
+    WINDOW.blit(SPACE[0], (0, 0))
     WINDOW.blit(SPACESHIP.img, (spaceship.x, spaceship.y))
     WINDOW.blit(ENEMY.img, (enemy.x, enemy.y))
 
