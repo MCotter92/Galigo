@@ -1,3 +1,5 @@
+
+
 # June 28
 
 - Entity Class (base class)
@@ -20,8 +22,4 @@
   - list of enemies
   - list of positions
 
-- Levels ( from Entity )
-  - image (background)
-  - name (level 1 etc)
-  - enemies
-  - player
+
