@@ -1,5 +1,5 @@
 from entity import Entity
-from enemies import Enemies
+from asset_classes.enemy import Enemies
 
 
 class Level(Entity):

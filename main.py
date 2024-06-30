@@ -1,6 +1,7 @@
 import os
 
 import pygame
+from asset_classes.enemy import Enemy
 
 from asset_classes.player import Player
 from utils.utils import load_png
@@ -24,7 +25,7 @@ SPACESHIP = Player(
 )
 
 
-ENEMY = Player(
+ENEMY = Enemy(
     "Enemy1",
     "spaceship_yellow.png",
     SPACESHIP_WIDTH - 3,
