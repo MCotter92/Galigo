@@ -1,7 +1,7 @@
 # deenski
-- [ ] Restore player movement
-- [ ] Player/Enemy coordinate updates in class method
-- [ ] Player Class
+- [X] Restore player movement
+- [X] Player/Enemy coordinate updates in class function
+- [X] Player Class
   - num of lives
 - [ ] Levels Class ( from Entity )
   - image (background)
