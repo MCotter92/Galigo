@@ -9,6 +9,3 @@ class Enemy(Entity):
         self.coords = coords
         self.x_coord = coords[0]
         self.y_coord = coords[1]
-
-    def render(self, window):
-        window.blit(self.img, self.coords)

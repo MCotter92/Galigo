@@ -65,11 +65,10 @@ def draw_window(level: Level, player_bullets):
     WINDOW.blit(level.player.img, (level.player.x_coord, level.player.y_coord))
 
     for enemy in level.enemies.enemies:
-        enemy.render(WINDOW)
+        WINDOW.blit(enemy.img, (enemy.x_coord, enemy.y_coord))
 
     for bullet in player_bullets:
         pygame.draw.rect(WINDOW, RED, bullet)
-
     pygame.display.update()
 
 
