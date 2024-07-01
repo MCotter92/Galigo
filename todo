@@ -1,14 +1,4 @@
 # deenski
-- [X] Restore player movement
-- [X] Player/Enemy coordinate updates in class function
-- [X] Player Class
-  - num of lives
-- [X] Levels Class ( from Entity )
-  - image (background) - done
-  - name (level 1 etc) - done 
-  - enemies (enemies class) - done
-  - player (Player class) - done
-  - when all enemies are emptied from the enemies list - create a new level. - done
 
 # mcotter92
 - [ ] Enemy collisions and health bar

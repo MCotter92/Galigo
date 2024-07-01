@@ -1,4 +1,15 @@
+# July 1
 
+- Restore player movement
+- Player/Enemy coordinate updates in class function
+- Player Class
+  - num of lives
+- Levels Class ( from Entity )
+  - image (background)
+  - name (level 1 etc)
+  - enemies (enemies class)
+  - player (Player class)
+  - when all enemies are emptied from the enemies list create a new level.
 
 # June 28
 
