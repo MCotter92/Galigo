@@ -10,6 +10,7 @@
   - enemies (enemies class)
   - player (Player class)
   - when all enemies are emptied from the enemies list create a new level.
+- Tests
 
 # June 28
 
