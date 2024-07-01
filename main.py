@@ -1,11 +1,9 @@
-import os
-
 import pygame
 
 from asset_classes.enemies import Enemies
 from asset_classes.enemy import Enemy
+from asset_classes.level import Level
 from asset_classes.player import Player
-from utils.utils import load_png
 
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -23,29 +21,26 @@ SPACESHIP = Player(
     height=SPACESHIP_HEIGHT,
     angle=180,
     hp=100,
-    x_coord=225,
-    y_coord=600,
+    coords=((WIDTH / 2) - 27.3, 600),
 )
-
-SPACE = load_png("space.png", WIDTH, HEIGHT, 0)
 
 # ENEMY_HIT = pygame.USEREVENT
 
 
-def create_enemies():
+def create_enemies(num, width, height):
     i = 0
-    x = 225
+    x = 50
     y = 200
     enemies = Enemies([], [])
-    while i < 5:
+    while i < num:
         ENEMY = Enemy(
             f"Enemy{i}",
             "spaceship_yellow.png",
-            SPACESHIP_WIDTH - 3,
-            SPACESHIP_HEIGHT - 3,
+            width,
+            height,
             angle=0,
             hp=50,
-            coord=(x, y),
+            coords=(x, y),
         )
         enemies.add_enemies(ENEMY)
         i += 1
@@ -53,13 +48,24 @@ def create_enemies():
     return enemies
 
 
-def draw_window(player_bullets):
-    WINDOW.blit(SPACE[0], (0, 0))
-    WINDOW.blit(SPACESHIP.img, (SPACESHIP.x_coord, SPACESHIP.y_coord))
+def level_generator(name, image, resolution, num_enemies) -> Level:
+    return Level(
+        name,
+        image,
+        resolution[0],
+        resolution[1],
+        0,
+        create_enemies(num_enemies, SPACESHIP_WIDTH - 5, SPACESHIP_HEIGHT - 5),
+        SPACESHIP,
+    )
 
-    enemies = create_enemies()
-    for enemy in enemies.enemies:
-        WINDOW.blit(enemy.img, enemy.coord)
+
+def draw_window(level: Level, player_bullets):
+    WINDOW.blit(level.img, (0, 0))
+    WINDOW.blit(level.player.img, (level.player.x_coord, level.player.y_coord))
+
+    for enemy in level.enemies.enemies:
+        enemy.render(WINDOW)
 
     for bullet in player_bullets:
         pygame.draw.rect(WINDOW, RED, bullet)
@@ -107,6 +113,11 @@ def main():
     player_bullets = []
     clock = pygame.time.Clock()
     run = True
+    enemy_count = 3
+    level_count = 1
+    level = level_generator(
+        f"Level {level_count}", "space.png", (WIDTH, HEIGHT), enemy_count
+    )
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -128,7 +139,13 @@ def main():
 
         spaceship_movement(keys_pressed)
         handle_bullets(player_bullets)
-        draw_window(player_bullets)
+        draw_window(level, player_bullets)
+        if len(level.enemies.enemies) == 0:
+            level_count += 1
+            enemy_count += 3
+            level = level_generator(
+                f"Level {level_count}", "space.png", (WIDTH, HEIGHT), enemy_count
+            )
 
 
 if __name__ == "__main__":
