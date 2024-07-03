@@ -3,11 +3,13 @@ from asset_classes.path import Path
 
 
 class Enemy(Entity):
-    def __init__(self, name, img, width, height, angle, hp, coord):
+    def __init__(self, name, img, width, height, angle, hp, coords):
         super().__init__(name, img, width, height, angle)
 
         self.hp = hp
-        self.coord = coord
+        self.coords = coords
+        self.x_coord = coords[0]
+        self.y_coord = coords[1]
 
     def path(Path):
         """
