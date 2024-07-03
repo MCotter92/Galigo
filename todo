@@ -1,4 +1,5 @@
 # deenski
+
 - [ ] Restore player movement
 - [ ] Player/Enemy coordinate updates in class method
 - [ ] Player Class
@@ -11,6 +12,7 @@
   - when all enemies are emptied from the enemies list - create a new level.
 
 # mcotter92
+
 - [ ] Enemy collisions and health bar
 - [ ] Player collisions and health bar
 - [ ] Enemy paths

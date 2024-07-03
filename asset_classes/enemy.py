@@ -1,4 +1,5 @@
 from asset_classes.entity import Entity
+from asset_classes.path import Path
 
 
 class Enemy(Entity):
@@ -7,3 +8,9 @@ class Enemy(Entity):
 
         self.hp = hp
         self.coord = coord
+
+    def path(Path):
+        """
+        do this.
+        """
+        return 0
