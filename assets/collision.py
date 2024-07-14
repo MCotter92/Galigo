@@ -1,5 +1,5 @@
-from asset_classes.enemy import Enemy
-from asset_classes.player import Player
+from assets.enemy import Enemy
+from assets.player import Player
 
 
 class Collision:

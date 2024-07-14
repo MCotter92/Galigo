@@ -1,9 +1,10 @@
-import pygame
-import math
+# import math
 
-from asset_classes.entity import Entity
-from asset_classes.enemy import Enemy
-from asset_classes.player import Player
+# import pygame
+
+# from assets.entity import Entity
+# from assets.enemy import Enemy
+# from assets.player import Player
 
 
 class Path:

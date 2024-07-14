@@ -1,6 +1,6 @@
 import pygame
 
-from asset_classes.entity import Entity
+from assets.entity import Entity
 
 
 class Player(Entity):

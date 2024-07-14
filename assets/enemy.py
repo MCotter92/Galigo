@@ -1,5 +1,5 @@
-from asset_classes.entity import Entity
-from asset_classes.path import Path
+from assets.entity import Entity
+from assets.path import Path
 
 
 class Enemy(Entity):
