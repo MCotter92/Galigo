@@ -1,5 +1,4 @@
 from assets.entity import Entity
-from assets.path import Path
 
 
 class Enemy(Entity):
@@ -10,9 +9,14 @@ class Enemy(Entity):
         self.coords = coords
         self.x_coord = coords[0]
         self.y_coord = coords[1]
+        self.sprite_path = []
 
-    def path(Path):
-        """
-        do this.
-        """
-        return 0
+    # def path(Path):
+    #     """
+    #     do this.
+    #     """
+    #     return 0
+    def update(self):
+        self.rect.move_ip(self.sprite_path[0][0], self.sprite_path[0,1])
+        if self.rect.top < self.height:
+            self.kill()

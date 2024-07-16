@@ -4,6 +4,7 @@ from assets.bullet import Bullet
 from assets.colors import BLACK, GREEN
 from assets.enemy import Enemy
 from assets.groups import all_sprites, bullets, enemies
+from assets.helpers import straight_line
 from assets.level import Level
 from assets.player import Player
 
@@ -48,10 +49,13 @@ def create_enemies(num, width, height):
             hp=50,
             coords=(x, y),
         )
+        line_path = straight_line(enemy.coords[0], HEIGHT)
+        enemy.sprite_path = line_path
         enemies.add(enemy)
         all_sprites.add(enemy)
         i += 1
         x += 100
+        print(enemy.sprite_path)
     return enemies
 
 
