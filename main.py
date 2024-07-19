@@ -1,4 +1,5 @@
 import pygame
+import cProfile
 
 from assets.bullet import Bullet
 from assets.colors import BLACK, GREEN
@@ -8,12 +9,13 @@ from assets.helpers import straight_line
 from assets.level import Level
 from assets.player import Player
 
+
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = (55, 40)
 FPS = 60
-VELO = 7
+VELO = 10
 BULLETS_VELOCITY = 10
 RED = (255, 0, 0)
 
@@ -55,7 +57,7 @@ def create_enemies(num, width, height):
         all_sprites.add(enemy)
         i += 1
         x += 100
-        print(enemy.sprite_path)
+        # print(enemy.sprite_path)
     return enemies
 
 
@@ -80,6 +82,7 @@ def draw_window(level: Level, enemies, bullets):
 
     for bullet in bullets:
         WINDOW.blit(bullet.surf, (bullet.rect.left, bullet.rect.top))
+    # pygame.display.update()
     pygame.display.flip()
 
 
@@ -125,7 +128,8 @@ def main():
         f"Level {level_count}", "assets/images/space.png", (WIDTH, HEIGHT), enemy_count
     )
     while run:
-        clock.tick(FPS)
+        # clock.tick(FPS)
+        print(clock.get_fps())
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -159,7 +163,9 @@ def main():
                 (WIDTH, HEIGHT),
                 enemy_count,
             )
+        clock.tick(FPS)
 
 
+# cProfile.run("main()")
 if __name__ == "__main__":
     main()

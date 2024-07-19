@@ -7,6 +7,7 @@ class Enemy(Entity):
 
         self.hp = hp
         self.coords = coords
+        self.height = height
         self.x_coord = coords[0]
         self.y_coord = coords[1]
         self.sprite_path = []
@@ -17,6 +18,6 @@ class Enemy(Entity):
     #     """
     #     return 0
     def update(self):
-        self.rect.move_ip(self.sprite_path[0][0], self.sprite_path[0,1])
+        self.rect.move_ip(self.sprite_path[0][0], self.sprite_path[0][1])
         if self.rect.top < self.height:
             self.kill()
