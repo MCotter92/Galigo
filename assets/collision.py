@@ -1,32 +1,25 @@
-from assets.enemy import Enemy
-from assets.player import Player
+import pygame
 
 
 class Collision:
-    def __init__(self, Enemy, Player, Bullets):
-        self.Enemy = Enemy
-        self.Player = Player
-        self.Bullets = Bullets
+    def __init__(self, enemies, player, bullets):
+        self.enemies = enemies
+        self.player = player
+        self.bullets = bullets
 
-    def handle_collisions(Enemy, Player, Bullets):
-        """
-        handles when someone get shot or run into.
-        """
+    def check_collisions(enemies, player, bullets):
 
-        # def handle_bullets(yellow_bullets, red_bullets, yellow, red):
-        #     for bullet in yellow_bullets:
-        #         bullet.x += BULLETS_VELOCITY
-        #         if red.colliderect(bullet):  # handles red bullets
-        #             pygame.event.post(pygame.event.Event(RED_HIT))
-        #             yellow_bullets.remove(bullet)
-        #         elif bullet.x > WIDTH:
-        #             yellow_bullets.remove(bullet)
+        # if any enemy has collieded with the player
+        enemy_to_player = pygame.sprite.spritecollideany(player, enemies)
+        if enemy_to_player:
+            player.hp -= 2
+            enemy_to_player.kill()
+            if player.hp <= 0:
+                player.kill()
+                # end the game somehow here
 
-        #     for bullet in red_bullets:
-        #         bullet.x -= BULLETS_VELOCITY
-        #         if yellow.colliderect(bullet):  # handles yellow bullets
-        #             pygame.event.post(pygame.event.Event(YELLOW_HIT))
-        #             red_bullets.remove(bullet)
-        #         elif bullet.x < 0:
-        #             red_bullets.remove(bullet)
-        #         return 0
+        for bullet in bullets.sprites():
+            bullet_to_enemy = pygame.sprite.spritecollideany(bullet, enemies)
+            if bullet_to_enemy:
+                bullet_to_enemy.kill()
+                bullet.kill()

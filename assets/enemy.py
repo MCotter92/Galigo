@@ -13,11 +13,6 @@ class Enemy(Entity):
         self.width = width
         self.height = height
 
-    # def path(Path):
-    #     """
-    #     do this.
-    #     """
-    #     return 0
     def update(self, window_height, window_width):
         self.y_coord += 1
         self.rect.move_ip(self.x_coord, self.y_coord)

@@ -1,6 +1,7 @@
 import pygame
 
 from assets.bullet import Bullet
+from assets.collision import Collision
 from assets.colors import BLACK, GREEN
 from assets.enemy import Enemy
 from assets.groups import all_sprites, bullets, enemies
@@ -107,22 +108,18 @@ def spaceship_movement(keys_pressed):
         SPACESHIP.y_coord += VELO
 
 
-def handle_bullets(bullets):  # add enemy as func input here when ready
-    for bullet in bullets:
-
-        bullet_collisions = pygame.sprite.spritecollideany(bullet, enemies)
-        if bullet_collisions:
-            bullet.kill()
-            bullet_collisions.kill()
-
-
 def main():
+    # player = Player()
+    # enemy = Enemy()
     clock = pygame.time.Clock()
     run = True
     enemy_count = 3
     level_count = 1
     level = level_generator(
-        f"Level {level_count}", "assets/images/space.png", (WIDTH, HEIGHT), enemy_count
+        f"Level {level_count}",
+        "assets/images/space.png",
+        (WIDTH, HEIGHT),
+        enemy_count,
     )
     while run:
         clock.tick(FPS)
@@ -145,11 +142,18 @@ def main():
         keys_pressed = pygame.key.get_pressed()
 
         spaceship_movement(keys_pressed)
-        handle_bullets(bullets)
+
+        Collision.check_collisions(
+            enemies,
+            level.player,
+            bullets,
+        )
+
         bullets.update(WIDTH, HEIGHT)
         enemies.update(WIDTH, HEIGHT)
         all_sprites.update(WIDTH, HEIGHT)
         draw_window(level, enemies, bullets)
+
         if len(level.enemies) == 0:
             level_count += 1
             enemy_count += 1
