@@ -1,13 +1,13 @@
 import pygame
 
 from assets.bullet import Bullet
+from assets.collision import Collision
 from assets.colors import BLACK, GREEN
 from assets.enemy import Enemy
 from assets.groups import all_sprites, bullets, enemies
 from assets.helpers import straight_line
 from assets.level import Level
 from assets.player import Player
-from assets.collision import Collision
 
 WIDTH, HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -144,8 +144,8 @@ def main():
         spaceship_movement(keys_pressed)
 
         Collision.check_collisions(
-            level.player,
             enemies,
+            level.player,
             bullets,
         )
 
