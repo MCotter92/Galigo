@@ -1,5 +1,4 @@
 from pygame.sprite import Group
-
 from assets.entity import Entity
 from assets.player import Player
 
