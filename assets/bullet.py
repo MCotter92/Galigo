@@ -4,7 +4,7 @@ import pygame
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, coordinates, speed=-10):
         super(Bullet, self).__init__()
-        self.surf = pygame.surface.Surface((10, 25))
+        self.surf = pygame.surface.Surface((5, 25))
         self.surf.fill(color)
         self.rect: pygame.Rect = self.surf.get_rect(
             center=(

@@ -2,13 +2,22 @@ import pygame
 
 from assets.entity import Entity
 from assets.healthbar import HealthBar
+from assets.spritesheet import SpriteSheet
 
 
 class Player(Entity):
     def __init__(
-        self, name, img, width, height, angle, max_health, current_health, coords
+        self,
+        name,
+        spritesheet_path,
+        width,
+        height,
+        angle,
+        max_health,
+        current_health,
+        coords,
     ):
-        super().__init__(name, img, width, height, angle)
+        super().__init__(name, spritesheet_path, width, height, angle)
         self.surf = pygame.surface.Surface([width, height])
         self.rect: pygame.Rect = self.surf.get_rect(topleft=coords)
         self.bottomleft = self.rect.bottomleft
@@ -29,6 +38,11 @@ class Player(Entity):
         )
 
         self.last_hit_time = 0
+
+    def get_image(self, sheet, frame, width, height):
+        image = pygame.Surface((width, height)).convert_alpha()
+        image.blit(sheet, (0, 0), ((frame * width), 0, width, height))
+        return image
 
     def draw(self, surface):
         surface.blit(self.img, (self.x_coord, self.y_coord))

@@ -22,10 +22,6 @@ class Enemy(Entity):
         path=None,
     ):
         super().__init__(name, img, width, height, angle)
-        self.surf = pygame.surface.Surface((width, height))
-        self.rect: pygame.Rect = self.surf.get_rect(topleft=coords)
-
-        self.topleft = self.rect.topleft
         self.width = width
         self.height = height
         self.coords = coords
@@ -34,6 +30,9 @@ class Enemy(Entity):
         self.start_y = start_y
         self.coords[0] = self.start_x
         self.coords[1] = self.start_y
+
+        self.surf = pygame.surface.Surface((width, height))
+        self.rect: pygame.Rect = self.surf.get_rect(topleft=self.coords)
 
         self.speed = speed
 
@@ -44,7 +43,7 @@ class Enemy(Entity):
         self.healthbar = HealthBar(
             max_health=self.max_health,
             current_health=self.current_health,
-            coords=[self.topleft[0], self.topleft[1]],
+            coords=[self.rect.topleft[0], self.rect.topleft[1]],
             width=self.width,
         )
 
@@ -53,6 +52,7 @@ class Enemy(Entity):
     def update(self, window_height):
         self.coords[0] = self.sprite_path.path(self.x_intercept, self.coords[1])
         self.coords[1] += self.speed
+        self.rect.topleft = (self.coords[0], self.coords[1])
         self.healthbar.rect.bottomleft = (
             self.coords[0],
             self.coords[1] - 10,

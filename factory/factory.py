@@ -1,6 +1,6 @@
 from assets.enemy import Enemy
 from assets.level import Level
-from assets.paths import ReverseZigZagPath
+from assets.paths import ReverseZigZagPath, StraightPath
 from assets.groups import enemies, all_sprites
 
 
@@ -23,7 +23,7 @@ def create_enemies(num, width, height):
             coords=[x, y],
             start_x=x,
             speed=1,
-            path=ReverseZigZagPath(amplitude=80, frequency=0.1),
+            path=StraightPath(),
         )
         enemies.add(enemy)
         all_sprites.add(enemy)
