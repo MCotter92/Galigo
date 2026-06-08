@@ -13,7 +13,7 @@ from renderers.renderers import draw_window
 
 WINDOW_WIDTH, WINDOW_HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-PLAYER_WIDTH, PLAYER_HEIGHT = (100, 100)
+PLAYER_WIDTH, PLAYER_HEIGHT = (54, 54)
 FPS = 60
 VELO = 10
 BULLETS_VELOCITY = 10
@@ -22,10 +22,10 @@ HIT_COOLDOWN = 1000  # milliseconds
 
 Player1 = Player(
     name="Player1",
-    img="assets/images/tiny-spaceships/tinyShip2.png",
+    spritesheet_path="assets/images/tiny-spaceships/tinyShip3.png",
     width=PLAYER_WIDTH,
     height=PLAYER_HEIGHT,
-    angle=180,
+    angle=0,
     max_health=100,
     current_health=100,
     coords=((WINDOW_WIDTH / 2) - 27.3, 600),
@@ -50,7 +50,7 @@ def main():
         player_width=PLAYER_WIDTH,
     )
     while run:
-        clock.tick(FPS)
+        tick = clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -76,15 +76,15 @@ def main():
         detect_bullet_enemies_collisions(bullets, enemies)
         run = detect_player_enemies_collisions(Player1, enemies, HIT_COOLDOWN)
         bullets.update(WINDOW_WIDTH, WINDOW_HEIGHT)
-        enemies.update(WINDOW_HEIGHT)
-        Player1.update_pos()
+        enemies.update(tick, WINDOW_HEIGHT)
+        Player1.update(tick)
         draw_window(level, enemies, bullets, WINDOW)
         if len(level.enemies) == 0:
             level_count += 1
             enemy_count += 1
             level = level_generator(
                 name=f"Level {level_count}",
-                image="assets/images/space.png",
+                image="assets/images/background-black.png",
                 window_width=WINDOW_WIDTH,
                 window_height=WINDOW_HEIGHT,
                 num_enemies=enemy_count,

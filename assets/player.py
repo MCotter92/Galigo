@@ -2,7 +2,8 @@ import pygame
 
 from assets.entity import Entity
 from assets.healthbar import HealthBar
-from assets.spritesheet import SpriteSheet
+from assets.spritesheet_registry import SPRITESHEET_REGISTRY
+from utils.utils import extract_frames
 
 
 class Player(Entity):
@@ -17,16 +18,26 @@ class Player(Entity):
         current_health,
         coords,
     ):
-        super().__init__(name, spritesheet_path, width, height, angle)
-        self.surf = pygame.surface.Surface([width, height])
-        self.rect: pygame.Rect = self.surf.get_rect(topleft=coords)
+        super().__init__(name, spritesheet_path, height, width, angle)
+        # spritesheet data
+        sheet_key = spritesheet_path.split("/")[-1]
+        sheet = SPRITESHEET_REGISTRY[sheet_key]
+        self.frames = extract_frames(
+            self.img, sheet["cols"], sheet["rows"], width, height
+        )
+        self.current_frame = 0
+        self.surf = self.frames[0]
+        self.rect = self.surf.get_rect(topleft=coords)
         self.bottomleft = self.rect.bottomleft
-        self.width = width
-        self.height = height
+
+        # position data
+        self.width = width  # render width
+        self.height = height  # render height
         self.coords = coords
         self.x_coord = coords[0]
         self.y_coord = coords[1]
 
+        # health data
         self.numlives = 1
         self.max_health = max_health
         self.current_health = current_health
@@ -36,16 +47,10 @@ class Player(Entity):
             coords=[self.bottomleft[0], self.bottomleft[1]],
             width=self.width,
         )
-
         self.last_hit_time = 0
 
-    def get_image(self, sheet, frame, width, height):
-        image = pygame.Surface((width, height)).convert_alpha()
-        image.blit(sheet, (0, 0), ((frame * width), 0, width, height))
-        return image
-
     def draw(self, surface):
-        surface.blit(self.img, (self.x_coord, self.y_coord))
+        surface.blit(self.frames[self.current_frame], (self.x_coord, self.y_coord))
         self.healthbar.draw(surface)
 
     def calculate_movement(self, keys_pressed, velo, width, height):
@@ -74,6 +79,10 @@ class Player(Entity):
             self.rect.bottomleft[0],
             self.rect.bottomleft[1] + 10,
         )
+
+    def update(self, now):
+        self.current_frame = (now // 200) % len(self.frames)
+        self.update_pos()
 
     def register_death(self):
         run = True
