@@ -15,8 +15,7 @@ python3 main.py
 ### Up Next
 - [ ] get spritesheets working.
     - almost there. Issues: 
-        - images look terrible. Scale issues? 
-        - enemy images don't follow rect. This is shown by the health bars moving but the enemy images being stagnent. 
+        - images are clear but small. Can i make them bigger without sacraficing resolution?
         - audit Entity class's relationship with subclasses and make sure this is designed well. Changes may have broken things in subtle ways. 
 
 

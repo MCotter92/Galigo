@@ -1,4 +1,6 @@
 import pygame
+
+from assets.spritesheet_registry import SPRITESHEET_REGISTRY as sp
 from assets.bullet import Bullet
 from assets.colors import GREEN
 from assets.groups import all_sprites, bullets, enemies
@@ -22,8 +24,8 @@ HIT_COOLDOWN = 1000  # milliseconds
 Player1 = Player(
     name="Player1",
     spritesheet_path="assets/images/tiny-spaceships/tinyShip3.png",
-    width=PLAYER_WIDTH,
-    height=PLAYER_HEIGHT,
+    width=27,
+    height=27,
     angle=0,
     max_health=100,
     current_health=100,
@@ -43,10 +45,9 @@ def main():
         image="assets/images/background-black.png",
         window_width=WINDOW_WIDTH,
         window_height=WINDOW_HEIGHT,
-        num_enemies=enemy_count,
+        num_enemies=level_count,
+        enemy_name="tinyShip2.png",
         player=Player1,
-        player_height=PLAYER_HEIGHT,
-        player_width=PLAYER_WIDTH,
     )
     while run:
         tick = clock.tick(FPS)
@@ -75,7 +76,7 @@ def main():
         detect_bullet_enemies_collisions(bullets, enemies)
         run = detect_player_enemies_collisions(Player1, enemies, HIT_COOLDOWN)
         bullets.update(WINDOW_WIDTH, WINDOW_HEIGHT)
-        enemies.update(tick, WINDOW_HEIGHT)
+        enemies.update(WINDOW_HEIGHT)
         Player1.update(tick)
         draw_window(level, enemies, bullets, WINDOW)
         if len(level.enemies) == 0:
@@ -86,10 +87,9 @@ def main():
                 image="assets/images/background-black.png",
                 window_width=WINDOW_WIDTH,
                 window_height=WINDOW_HEIGHT,
-                num_enemies=enemy_count,
+                num_enemies=level_count,
+                enemy_name="tinyShip2.png",
                 player=Player1,
-                player_height=PLAYER_HEIGHT,
-                player_width=PLAYER_WIDTH,
             )
 
 

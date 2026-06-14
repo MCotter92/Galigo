@@ -1,12 +1,12 @@
 import pygame
 
-from assets.entity import Entity
+from utils.utils import load_png
 from assets.healthbar import HealthBar
-from assets.spritesheet_registry import SPRITESHEET_REGISTRY
+from assets.spritesheet_registry import SPRITESHEET_REGISTRY as sr
 from utils.utils import extract_frames
 
 
-class Player(Entity):
+class Player(pygame.sprite.Sprite):
     def __init__(
         self,
         name,
@@ -18,12 +18,19 @@ class Player(Entity):
         current_health,
         coords,
     ):
-        super().__init__(name, spritesheet_path, height, width, angle)
-        # spritesheet data
+        pygame.sprite.Sprite.__init__(self)
+        self.name = name
+        self.surf, self.rect = load_png(
+            spritesheet_path,
+            sr["tinyShip3.png"]["width"],
+            sr["tinyShip3.png"]["height"],
+            angle,
+        )
+
         sheet_key = spritesheet_path.split("/")[-1]
-        sheet = SPRITESHEET_REGISTRY[sheet_key]
+        sheet = sr[sheet_key]
         self.frames = extract_frames(
-            self.img, sheet["cols"], sheet["rows"], width, height
+            self.surf, sheet["cols"], sheet["rows"], width, height
         )
         self.current_frame = 0
         self.surf = self.frames[0]
@@ -74,11 +81,12 @@ class Player(Entity):
             self.y_coord += velo
 
     def update_pos(self):
-        self.rect.topleft = (self.x_coord, self.y_coord)
-        self.healthbar.rect.topleft = (
-            self.rect.bottomleft[0],
-            self.rect.bottomleft[1] + 10,
-        )
+        if self.rect is not None:
+            self.rect.topleft = (self.x_coord, self.y_coord)
+            self.healthbar.rect.topleft = (
+                self.rect.bottomleft[0],
+                self.rect.bottomleft[1] + 10,
+            )
 
     def update(self, now):
         self.current_frame = (now // 200) % len(self.frames)

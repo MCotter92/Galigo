@@ -16,11 +16,15 @@ SPRITESHEET_REGISTRY = {
         "path": "assets/images/tiny-spaceships/tinyShip2.png",
         "cols": 6,
         "rows": 3,
+        "width": 210,
+        "height": 108,
     },
     "tinyShip3.png": {
         "path": "assets/images/tiny-spaceships/tinyShip3.png",
         "cols": 5,
         "rows": 2,
+        "width": 135,
+        "height": 54,
     },
     "tinyShip4.png": {
         "path": "assets/images/tiny-spaceships/tinyShip4.png",

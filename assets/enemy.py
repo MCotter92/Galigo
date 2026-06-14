@@ -1,8 +1,9 @@
-from assets.entity import Entity
+import pygame
+
 from assets.healthbar import HealthBar
 from assets.paths import StraightPath
 from utils.utils import load_png
-from assets.spritesheet_registry import SPRITESHEET_REGISTRY
+from assets.spritesheet_registry import SPRITESHEET_REGISTRY as sr
 from utils.utils import extract_frames
 
 
@@ -22,15 +23,20 @@ class Enemy(pygame.sprite.Sprite):
         start_y=0,
         path=None,
     ):
-        super().__init__(name, spritesheet_path, width, height, angle)
+        pygame.sprite.Sprite.__init__(self)
         self.name = name
-        self.surf, self.rect = load_png(img, width, height, angle)
+        self.surf, self.rect = load_png(
+            spritesheet_path,
+            sr["tinyShip2.png"]["width"],
+            sr["tinyShip2.png"]["height"],
+            angle,
+        )
 
         # spritesheet data
         sheet_key = spritesheet_path.split("/")[-1]
-        sheet = SPRITESHEET_REGISTRY[sheet_key]
+        sheet = sr[sheet_key]
         self.frames = extract_frames(
-            self.img, sheet["cols"], sheet["rows"], width, height
+            self.surf, sheet["cols"], sheet["rows"], width, height
         )
         self.current_frame = 0
         self.surf = self.frames[0]
