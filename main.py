@@ -10,7 +10,6 @@ from collisions.collisions import (
 )
 from renderers.renderers import draw_window
 
-
 WINDOW_WIDTH, WINDOW_HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 PLAYER_WIDTH, PLAYER_HEIGHT = (54, 54)

@@ -5,17 +5,17 @@ def load_png(img_path, width, height, angle_x=0):
     """Load image and return image object"""
 
     try:
-        image = pygame.image.load(img_path)
-        if image.get_alpha() is None:
-            image = image.convert()
+        surf = pygame.image.load(img_path)
+        if surf.get_alpha() is None:
+            surf = surf.convert()
         else:
-            image = image.convert_alpha()
-        scale = pygame.transform.scale(image, (width, height))
-        image = pygame.transform.rotate(scale, angle_x)
+            surf = surf.convert_alpha()
+        scale = pygame.transform.scale(surf, (width, height))
+        surf = pygame.transform.rotate(scale, angle_x)
     except FileNotFoundError:
         print(f"Cannot load image: {img_path}")
         raise SystemExit
-    return image, image.get_rect()
+    return surf, surf.get_rect()
 
 
 def extract_frames(sheet, cols, rows, target_w, target_h):

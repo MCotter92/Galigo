@@ -1,11 +1,12 @@
 from assets.entity import Entity
 from assets.healthbar import HealthBar
 from assets.paths import StraightPath
+from utils.utils import load_png
 from assets.spritesheet_registry import SPRITESHEET_REGISTRY
 from utils.utils import extract_frames
 
 
-class Enemy(Entity):
+class Enemy(pygame.sprite.Sprite):
     def __init__(
         self,
         name,
@@ -22,6 +23,9 @@ class Enemy(Entity):
         path=None,
     ):
         super().__init__(name, spritesheet_path, width, height, angle)
+        self.name = name
+        self.surf, self.rect = load_png(img, width, height, angle)
+
         # spritesheet data
         sheet_key = spritesheet_path.split("/")[-1]
         sheet = SPRITESHEET_REGISTRY[sheet_key]
@@ -58,11 +62,7 @@ class Enemy(Entity):
         )
         self.last_hit_time = 0
 
-    def draw(self, surface):
-        surface.blit(self.frames[self.current_frame], (self.x_coord, self.y_coord))
-        self.healthbar.draw(surface)
-
-    def update_pos(self, window_height):
+    def update(self, window_height):
         self.coords[0] = self.sprite_path.path(self.x_intercept, self.coords[1])
         self.coords[1] += self.speed
         self.rect.topleft = (self.coords[0], self.coords[1])
@@ -74,6 +74,7 @@ class Enemy(Entity):
         if self.coords[1] > window_height + 25:
             self.kill()
 
-    def update(self, now, window_height):
-        self.current_frame = (now // 200) % len(self.frames)
-        self.update_pos(window_height)
+    def draw(self, surface):
+        surface.blit(self.surf, (self.coords[0], self.coords[1]))
+
+        self.healthbar.draw(surface)
