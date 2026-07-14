@@ -27,8 +27,8 @@ class Enemy(pygame.sprite.Sprite):
         self.name = name
         self.surf, self.rect = load_png(
             spritesheet_path,
-            sr["tinyShip2.png"]["width"],
-            sr["tinyShip2.png"]["height"],
+            sr["tinyShip6.png"]["width"],
+            sr["tinyShip6.png"]["height"],
             angle,
         )
 
@@ -39,7 +39,7 @@ class Enemy(pygame.sprite.Sprite):
             self.surf, sheet["cols"], sheet["rows"], width, height
         )
         self.current_frame = 0
-        self.surf = self.frames[0]
+        self.surf = self.frames[self.current_frame]
         self.rect = self.surf.get_rect(topleft=coords)
 
         # position data
@@ -69,18 +69,25 @@ class Enemy(pygame.sprite.Sprite):
         self.last_hit_time = 0
 
     def update(self, window_height):
-        self.coords[0] = self.sprite_path.path(self.x_intercept, self.coords[1])
-        self.coords[1] += self.speed
-        self.rect.topleft = (self.coords[0], self.coords[1])
-        self.healthbar.rect.bottomleft = (
-            self.coords[0],
-            self.coords[1] - 10,
-        )
+        if self.rect is None:
+            raise ValueError("self.rect is None")
+        else:
+            self.coords[0] = self.sprite_path.path(self.x_intercept, self.coords[1])
+            self.coords[1] += self.speed
+            self.rect.topleft = (self.coords[0], self.coords[1])  # type: ignore
+            self.healthbar.rect.bottomleft = (
+                self.coords[0],
+                self.coords[1] - 10,
+            )
 
-        if self.coords[1] > window_height + 25:
-            self.kill()
+            if self.coords[1] > window_height + 25:
+                self.kill()
 
     def draw(self, surface):
+        self.current_frame += 1
+        if self.current_frame >= len(self.frames):
+            self.current_frame = 0
+        self.surf = self.frames[self.current_frame]
         surface.blit(self.surf, (self.coords[0], self.coords[1]))
 
         self.healthbar.draw(surface)

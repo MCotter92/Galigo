@@ -1,6 +1,5 @@
 import pygame
 
-from assets.spritesheet_registry import SPRITESHEET_REGISTRY as sp
 from assets.bullet import Bullet
 from assets.colors import GREEN
 from assets.groups import all_sprites, bullets, enemies
@@ -11,6 +10,7 @@ from collisions.collisions import (
     detect_player_enemies_collisions,
 )
 from renderers.renderers import draw_window
+
 
 WINDOW_WIDTH, WINDOW_HEIGHT = (1080, 700)
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -77,7 +77,7 @@ def main():
         run = detect_player_enemies_collisions(Player1, enemies, HIT_COOLDOWN)
         bullets.update(WINDOW_WIDTH, WINDOW_HEIGHT)
         enemies.update(WINDOW_HEIGHT)
-        Player1.update(tick)
+        Player1.update()
         draw_window(level, enemies, bullets, WINDOW)
         if len(level.enemies) == 0:
             level_count += 1

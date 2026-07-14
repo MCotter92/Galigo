@@ -19,12 +19,14 @@ def load_png(sheet_path, width, height, angle_x=0):
 
 
 def extract_frames(sheet, cols, rows, target_w, target_h):
-    frame_w = sheet.get_width() // cols
-    frame_h = sheet.get_height() // rows
+    frame_width = sheet.get_width() // cols
+    frame_height = sheet.get_height() // rows
     frames = []
     for row in range(rows):
         for col in range(cols):
-            frame = sheet.subsurface(col * frame_w, row * frame_h, frame_w, frame_h)
+            frame = sheet.subsurface(
+                col * frame_width, row * frame_height, frame_width, frame_height
+            )
             frame = pygame.transform.scale(frame, (target_w, target_h))
             frames.append(frame)
     return frames

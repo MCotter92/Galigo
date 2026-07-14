@@ -34,7 +34,13 @@ def create_enemies(num, spaceship_name):
 
 
 def level_generator(
-    name, image, window_width, window_height, num_enemies, enemy_name, player
+    name,
+    image,
+    window_width,
+    window_height,
+    num_enemies,
+    enemy_name,
+    player,
 ) -> Level:
     return Level(
         name=name,

@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
             self.surf, sheet["cols"], sheet["rows"], width, height
         )
         self.current_frame = 0
-        self.surf = self.frames[0]
+        self.surf = self.frames[self.current_frame]
         self.rect = self.surf.get_rect(topleft=coords)
         self.bottomleft = self.rect.bottomleft
 
@@ -58,6 +58,10 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, surface):
         surface.blit(self.frames[self.current_frame], (self.x_coord, self.y_coord))
+        self.current_frame += 1
+        if self.current_frame >= len(self.frames):
+            self.current_frame = 0
+        self.surf = self.frames[self.current_frame]
         self.healthbar.draw(surface)
 
     def calculate_movement(self, keys_pressed, velo, width, height):
@@ -80,7 +84,7 @@ class Player(pygame.sprite.Sprite):
         if keys_pressed[pygame.K_s] and self.y_coord + velo + self.height < height:
             self.y_coord += velo
 
-    def update_pos(self):
+    def update(self):
         if self.rect is not None:
             self.rect.topleft = (self.x_coord, self.y_coord)
             self.healthbar.rect.topleft = (
@@ -88,9 +92,8 @@ class Player(pygame.sprite.Sprite):
                 self.rect.bottomleft[1] + 10,
             )
 
-    def update(self, now):
-        self.current_frame = (now // 200) % len(self.frames)
-        self.update_pos()
+    # def update(self):
+    #     self.update_pos()
 
     def register_death(self):
         run = True
