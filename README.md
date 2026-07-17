@@ -16,7 +16,7 @@ python3 main.py
 - [ ] get spritesheets working.
     - almost there. Issues: 
         - [x] no animation
-        - [ ] audit Entity class's relationship with subclasses and make sure this is designed well. Changes may have broken things in subtle ways. 
+        - [x] audit Entity class's relationship with subclasses and make sure this is designed well. Changes may have broken things in subtle ways. 
 
 
 

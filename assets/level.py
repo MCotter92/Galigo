@@ -1,10 +1,9 @@
 from pygame.sprite import Group
-
-from assets.entity import Entity
+from utils.utils import load_png
 from assets.player import Player
 
 
-class Level(Entity):
+class Level:
     def __init__(
         self,
         name,
@@ -15,6 +14,10 @@ class Level(Entity):
         enemies: Group,
         player: Player,
     ):
-        super(Level, self).__init__(name, img, width, height, angle)
+        self.img, self.rect = load_png(img, width, height, angle)
+        self.name = name
+        self.width = width
+        self.height = height
+        self.angle = angle
         self.player = player
         self.enemies = enemies
