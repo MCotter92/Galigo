@@ -77,17 +77,6 @@ class Player(pygame.sprite.Sprite):
         if keys_pressed[pygame.K_d] and self.x_coord + velo + self.width < width:
             self.x_coord = self.x_coord + velo
 
-        # move up
-        if keys_pressed[pygame.K_w] and self.y_coord - velo > 0:
-            if self.y_coord <= 500:
-                self.y_coord = 500
-            else:
-                self.y_coord = self.y_coord - velo
-
-        # move down
-        if keys_pressed[pygame.K_s] and self.y_coord + velo + self.height < height:
-            self.y_coord += velo
-
     def update(self):
         if self.rect is not None:
             self.rect.topleft = (self.x_coord, self.y_coord)

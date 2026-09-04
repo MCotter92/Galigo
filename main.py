@@ -31,7 +31,7 @@ Player1 = Player(
     angle=0,
     max_health=100,
     current_health=100,
-    coords=((WINDOW_WIDTH / 2) - 27.3, 600),
+    coords=((WINDOW_WIDTH / 2) - 27.3, WINDOW_HEIGHT - 50),
 )
 
 all_sprites_group.add(Player1)
@@ -43,7 +43,6 @@ def main():
     run = True
     enemy_count = 3
     level_count = 1
-    # NOTE: some of these sheets aren't would require a refactor in how i parse out the images due to multiple columns.
     enemy_list = ["tinyShip1.png", "tinyShip4.png", "tinyShip6.png"]
     level = level_generator(
         name=f"Level {level_count}",
