@@ -1,6 +1,9 @@
 from pygame.sprite import Group
+from logging_config import get_logger
 from utils.utils import load_png
 from assets.player import Player
+
+logger = get_logger("level")
 
 
 class Level:
@@ -21,3 +24,4 @@ class Level:
         self.angle = angle
         self.player = player
         self.enemies = enemies
+        logger.info("Level '%s' created", name)

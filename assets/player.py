@@ -1,16 +1,19 @@
 import pygame
 
+from logging_config import get_logger
 from utils.utils import load_png
 from assets.healthbar import HealthBar
 from assets.spritesheet_registry import SPRITESHEET_REGISTRY as sr
 from utils.utils import extract_frames
+
+logger = get_logger("player")
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(
         self,
         name,
-        spritesheet_path,
+        sr_entry,
         width,
         height,
         angle,
@@ -21,13 +24,13 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.name = name
         self.surf, self.rect = load_png(
-            spritesheet_path,
+            sr_entry,
             sr["tinyShip3.png"]["width"],
             sr["tinyShip3.png"]["height"],
             angle,
         )
 
-        sheet_key = spritesheet_path.split("/")[-1]
+        sheet_key = sr_entry.split("/")[-1]
         sheet = sr[sheet_key]
         self.frames = extract_frames(
             self.surf, sheet["cols"], sheet["rows"], width, height
@@ -55,6 +58,7 @@ class Player(pygame.sprite.Sprite):
             width=self.width,
         )
         self.last_hit_time = 0
+        logger.info("Player '%s' created at (%.0f, %.0f)", name, coords[0], coords[1])
 
     def draw(self, surface):
         surface.blit(self.frames[self.current_frame], (self.x_coord, self.y_coord))
@@ -99,10 +103,14 @@ class Player(pygame.sprite.Sprite):
         run = True
         self.numlives = self.numlives - 1
         if self.numlives == 0:
+            logger.warning("Player '%s' has died — game over", self.name)
             self.kill()
             run = False
             return run
         else:
+            logger.info(
+                "Player '%s' died — %d lives remaining", self.name, self.numlives
+            )
             self.max_health = 100
         return run
 

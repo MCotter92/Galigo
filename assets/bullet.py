@@ -1,5 +1,9 @@
 import pygame
 
+from logging_config import get_logger
+
+logger = get_logger("bullet")
+
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, color, coordinates, speed=-10):
@@ -14,15 +18,17 @@ class Bullet(pygame.sprite.Sprite):
         )
         assert self.rect is not None
         self.speed = speed
+        logger.debug("Bullet spawned at (%.0f, %.0f)", coordinates[0], coordinates[1])
 
     def update(self, window_width, window_height):
         self.rect.move_ip(0, self.speed)
 
-        if self.rect.top <= 0:
-            self.kill()
-        elif self.rect.top >= window_height:
-            self.kill()
-        elif self.rect.left <= 0:
-            self.kill()
-        elif self.rect.left >= window_width:
+        if (
+            self.rect.top <= 0
+            or self.rect.top >= window_height
+            or self.rect.left <= 0
+            or self.rect.left >= window_width
+        ):
+            logger.debug("Bullet removed — off-screen at (%d, %d)",
+                         self.rect.centerx, self.rect.centery)
             self.kill()

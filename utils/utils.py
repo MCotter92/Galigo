@@ -1,20 +1,26 @@
 import pygame
 
+from logging_config import get_logger
+from assets.spritesheet_registry import SPRITESHEET_REGISTRY as SR
 
-def load_png(sheet_path, width, height, angle_x=0):
+logger = get_logger("utils")
+
+
+def load_png(sr_entry, width, height, angle_x=0):
     """Load image and return image object"""
 
     try:
-        surf = pygame.image.load(sheet_path)
+        surf = pygame.image.load(SR[sr_entry]["path"])
         if surf.get_alpha() is None:
             surf = surf.convert()
         else:
             surf = surf.convert_alpha()
         scale = pygame.transform.scale(surf, (width, height))
         surf = pygame.transform.rotate(scale, angle_x)
-    except FileNotFoundError:
-        print(f"Cannot load image: {sheet_path}")
-        raise SystemExit
+        logger.debug("Loaded asset: %s", sr_entry)
+    except FileNotFoundError as e:
+        logger.error("Cannot load image: %s", sr_entry)
+        raise e
     return surf, surf.get_rect()
 
 
